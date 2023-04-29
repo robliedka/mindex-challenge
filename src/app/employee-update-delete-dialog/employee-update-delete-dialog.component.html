@@ -1,0 +1,50 @@
+<ng-container *ngIf="updating; else deleting">
+  <p class="mat-h1" mat-dialog-title>
+    Update Employee
+  </p>
+  <div mat-dialog-content>
+    <div class="d-flex flex-column">
+    <mat-form-field appearance="fill" class="py-2">
+      <mat-label>First Name</mat-label>
+      <input matInput disabled [value]="employeeForm?.employee?.firstName" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="py-2">
+      <mat-label>First Last</mat-label>
+      <input matInput disabled [value]="employeeForm?.employee?.lastName" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="py-2">
+      <mat-label>Title</mat-label>
+      <input matInput disabled [value]="employeeForm?.employee?.position" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="py-2">
+      <mat-label>Compensation</mat-label>
+      <input matInput type="number" [formControl]="employeeForm.formGroup.controls.compensation" />
+      <span matPrefix>$</span>
+      <mat-error *ngIf="!employeeForm.formGroup.controls.compensation?.valid">
+        Required, Greater than 0
+      </mat-error>
+    </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="d-flex justify-content-end">
+    <button mat-button [mat-dialog-close]="false">Cancel</button>
+    <button mat-button (click)="updateEmployee()" cdkFocusInitial>
+      Save
+    </button>
+  </div>
+</ng-container>
+<ng-template #deleting> 
+    <p class="mat-h1" mat-dialog-title>
+        Delete Employee
+      </p>
+      <div mat-dialog-content>
+        <p class="mat-h3">Are you sure you want to delete employee {{ employee.firstName }} {{ employee.lastName }}?</p>
+        <p class="mat-h3 pt-2">This action cannot be undone.</p>
+      </div>
+      <div mat-dialog-actions class="d-flex justify-content-end">
+        <button mat-button [mat-dialog-close]="false">Cancel</button>
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>
+          Confirm
+        </button>
+      </div>
+</ng-template>

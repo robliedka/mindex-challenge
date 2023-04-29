@@ -1,0 +1,11 @@
+.list-item{
+    border-radius: 4px;
+}
+
+.list-item:hover{
+    background: rgba(0,0,0, .2);
+}
+
+.bg-gray {
+    background: rgba(0,0,0, .1);
+}

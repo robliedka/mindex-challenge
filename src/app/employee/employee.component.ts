@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 import {Employee} from '../employee';
 
@@ -9,6 +9,10 @@ import {Employee} from '../employee';
 })
 export class EmployeeComponent {
   @Input() employee: Employee;
+  @Input() directReports: Employee[];
+
+  @Output() deleteEmployee = new EventEmitter<Employee>()
+  @Output() updateEmployee = new EventEmitter<Employee>();
 
   constructor() {
   }

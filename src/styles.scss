@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+
+*, input{
+    font-family: Poppins, sans-serif; 
+    color: rgb(203 213 225) !important;
+  }
+
+
+html, body{
+    background-color: rgb(30 41 59);
+}
+
+.mat-card, .mat-dialog-container{
+    background-color: rgb(71 85 105);
+}

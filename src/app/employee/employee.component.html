@@ -1,14 +1,65 @@
-<mat-card class="employee">
+<mat-card class="employee h-100">
   <mat-card-header>
-    <mat-card-title>{{employee.lastName}}, {{employee.firstName}}</mat-card-title>
-    <mat-card-subtitle>{{employee.id}}</mat-card-subtitle>
-    <mat-card-subtitle>{{employee.directReports?.length || 'No'}} Report{{employee.directReports?.length === 1 ? 's' : '' }}</mat-card-subtitle>
+    <mat-card-title
+      >{{ employee.lastName }}, {{ employee.firstName }}</mat-card-title
+    >
+    <mat-card-subtitle
+      >Employee ID: {{ employee.id }} -
+      {{
+        !!employee.directReports?.length
+          ? "Reports: " + employee.directReports?.length
+          : "No Reports"
+      }}</mat-card-subtitle
+    >
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="px-2">
     <dl>
       <dt>Job Title</dt>
-      <dd>{{employee.position}}</dd>
-      <dd>{{(employee.compensation || 0) | currency }}</dd>
+      <dd>
+        {{ employee.position }} - {{ employee.compensation || 0 | currency }}
+      </dd>
     </dl>
+
+    <mat-card class="employee">
+      <mat-card-header>
+        <mat-card-title>Direct Reports</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ng-container *ngIf="directReports?.length; else noReportsMsg">
+          <mat-list class="my-3">
+            <mat-list-item *ngFor="let report of directReports; let odd = odd">
+              <div
+                [ngClass]="{ 'bg-gray': odd }"
+                class="w-100 px-3 d-flex flex-row justify-content-between list-item align-items-center"
+              >
+                <p class="text-center m-0">
+                  {{ report.firstName }} {{ report.lastName }},
+                  {{ report.position }}
+                </p>
+                <div>
+                  <button
+                    mat-icon-button
+                    aria-label="Edit employee button"
+                    (click)="updateEmployee.emit(report)"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    aria-label="Delete employee button"
+                    (click)="deleteEmployee.emit(report)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </ng-container>
+        <ng-template #noReportsMsg>
+          This employee does not have any reports
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
   </mat-card-content>
 </mat-card>

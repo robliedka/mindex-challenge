@@ -1,5 +1,6 @@
-<mat-grid-list class="employee-list" cols="4">
-  <mat-grid-tile *ngFor="let emp of employees">
-    <app-employee [employee]="emp"></app-employee>
-  </mat-grid-tile>
-</mat-grid-list>
+<div class="row w-100 px-4">
+  <div class="col-md-6 p-4" *ngFor="let emp of employees">
+    <app-employee class="w-100 h-100" [employee]="emp" [directReports]="getEmployeeReports(emp.directReports)"
+    (deleteEmployee)="deleteEmployee($event)" (updateEmployee)="updateEmployee($event)"></app-employee>
+  </div>
+</div>

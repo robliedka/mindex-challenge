@@ -1,13 +1,14 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {from, Observable, throwError} from 'rxjs';
-import {catchError, flatMap} from 'rxjs/operators';
+import {from, Observable, Subject, throwError} from 'rxjs';
+import {catchError, flatMap, tap} from 'rxjs/operators';
 
 import {Employee} from './employee';
 
 @Injectable()
 export class EmployeeService {
   private url = '/api/employees';
+  public employeesChanged = new Subject<void>(); 
 
   constructor(private http: HttpClient) {
   }
@@ -27,13 +28,14 @@ export class EmployeeService {
 
   save(emp: Employee): Observable<Employee> {
     const response = (!!emp.id) ? this.put(emp) : this.post(emp);
-    return response.pipe(catchError(this.handleError));
+    return response.pipe(tap(_ => this.employeesChanged.next()), catchError(this.handleError));
   }
 
   remove(emp: Employee): Observable<never> {
     return this.http
       .delete<never>(`${this.url}/${emp.id}`)
-      .pipe(catchError(this.handleError));
+      .pipe(tap(_ => this.employeesChanged.next()),
+          catchError(this.handleError));
   }
 
   private post(emp: Employee): Observable<Employee> {
