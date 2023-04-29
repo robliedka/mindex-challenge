@@ -2,11 +2,13 @@
   <mat-card-header>
     <mat-card-title>{{employee.lastName}}, {{employee.firstName}}</mat-card-title>
     <mat-card-subtitle>{{employee.id}}</mat-card-subtitle>
+    <mat-card-subtitle>{{employee.directReports?.length || 'No'}} Report{{employee.directReports?.length === 1 ? 's' : '' }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <dl>
       <dt>Job Title</dt>
       <dd>{{employee.position}}</dd>
+      <dd>{{(employee.compensation || 0) | currency }}</dd>
     </dl>
   </mat-card-content>
 </mat-card>
