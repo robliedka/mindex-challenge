@@ -3,6 +3,7 @@ import {Component, Input} from '@angular/core';
 
 import {EmployeeListComponent} from './employee-list.component';
 import {EmployeeService} from '../employee.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({selector: 'app-employee', template: ''})
 class EmployeeComponent {
@@ -18,10 +19,14 @@ class GridTileComponent {
 }
 
 const employeeServiceSpy = jasmine.createSpyObj('EmployeeService', ['getAll', 'get', 'save', 'remove']);
+const matDialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
 
 describe('EmployeeListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatDialogModule
+      ],
       declarations: [
         EmployeeListComponent,
         EmployeeComponent,

@@ -38,6 +38,7 @@
                 </p>
                 <div>
                   <button
+                    id="edit"
                     mat-icon-button
                     aria-label="Edit employee button"
                     (click)="updateEmployee.emit(report)"
@@ -45,6 +46,7 @@
                     <mat-icon>edit</mat-icon>
                   </button>
                   <button
+                    id="delete"
                     mat-icon-button
                     aria-label="Delete employee button"
                     (click)="deleteEmployee.emit(report)"

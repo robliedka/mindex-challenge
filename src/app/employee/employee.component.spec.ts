@@ -46,9 +46,83 @@ describe('EmployeeComponent', () => {
       id: 1,
       firstName: 'first',
       lastName: 'last',
-      position: 'jobTitle'
+      position: 'jobTitle',
+      directReports: [2]
+    };
+    expect(comp).toBeTruthy();
+    
+  }));
+
+  it('should emit direct report - delete', async(() => {
+    const fixture = TestBed.createComponent(EmployeeComponent);
+    const comp = fixture.debugElement.componentInstance;
+    comp.employee = {
+      id: 1,
+      firstName: 'first',
+      lastName: 'last',
+      position: 'jobTitle',
+      directReports: [2]
     };
 
+    comp.directReports = [
+      {
+        id: 2,
+        firstName: 'first - Report',
+        lastName: 'last - Report',
+        position: 'jobTitle - Report',
+      }
+    ]
+
     expect(comp).toBeTruthy();
+    
+    spyOn(comp.deleteEmployee, 'emit');
+
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement;
+    const button = nativeElement.querySelector('#delete');
+    button.dispatchEvent(new Event('click'));
+
+    fixture.detectChanges();
+
+    expect(comp.deleteEmployee.emit).toHaveBeenCalledWith(comp.directReports[0]);
+
+  }));
+
+
+  it('should emit direct report - update', async(() => {
+    const fixture = TestBed.createComponent(EmployeeComponent);
+    const comp = fixture.debugElement.componentInstance;
+    comp.employee = {
+      id: 1,
+      firstName: 'first',
+      lastName: 'last',
+      position: 'jobTitle',
+      directReports: [2]
+    };
+
+    comp.directReports = [
+      {
+        id: 2,
+        firstName: 'first - Report',
+        lastName: 'last - Report',
+        position: 'jobTitle - Report',
+      }
+    ]
+
+    expect(comp).toBeTruthy();
+    
+    spyOn(comp.updateEmployee, 'emit');
+    
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement;
+    const button = nativeElement.querySelector('#edit');
+    button.dispatchEvent(new Event('click'));
+
+    fixture.detectChanges();
+
+    expect(comp.updateEmployee.emit).toHaveBeenCalledWith(comp.directReports[0]);
+
   }));
 });
